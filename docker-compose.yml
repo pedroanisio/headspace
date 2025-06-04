@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: headspace_postgres
+    environment:
+      POSTGRES_DB: headspace
+      POSTGRES_USER: headspace_user
+      POSTGRES_PASSWORD: headspace_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U headspace_user -d headspace"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - headspace_network
+
+  backend:
+    build:
+      context: ./src/headspace-be
+      dockerfile: Dockerfile
+    container_name: headspace_backend
+    environment:
+      - DATABASE_URL=postgresql://headspace_user:headspace_password@postgres:5432/headspace
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./src/headspace-be:/app
+    restart: unless-stopped
+    networks:
+      - headspace_network
+
+  frontend:
+    build:
+      context: ./src/headspace-fe
+      dockerfile: Dockerfile
+    container_name: headspace_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./src/headspace-fe:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+    networks:
+      - headspace_network
+
+volumes:
+  postgres_data:
+
+networks:
+  headspace_network:
+    driver: bridge 

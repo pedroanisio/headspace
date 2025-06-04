@@ -45,23 +45,37 @@ The goal is to help its ADHD coder to cope with a lot of information.
 
 ### Backend Setup
 
-```bash
-cd src/headspace-be
-uv pip install -e .
-uv run python main.py
-```
-- API: http://localhost:8000
-- Docs: http://localhost:8000/api/docs
-- Health: http://localhost:8000/health
+1. Navigate to the backend directory:
+   ```bash
+   cd src/headspace-be
+   ```
+2. Install dependencies with UV:
+   ```bash
+   uv pip install -e .
+   ```
+3. Run the FastAPI server:
+   ```bash
+   uv run python main.py
+   ```
+   - API: http://localhost:8000
+   - Docs: http://localhost:8000/api/docs
+   - Health: http://localhost:8000/health
 
 ### Frontend Setup
 
-```bash
-cd src/headspace-fe
-npm install
-npm run dev
-```
-- Frontend: http://localhost:3000
+1. Navigate to the frontend directory:
+   ```bash
+   cd src/headspace-fe
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+   - Frontend: http://localhost:3000
 
 ## 🎯 Features
 
