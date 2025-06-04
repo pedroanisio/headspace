@@ -8,8 +8,6 @@ services:
       POSTGRES_DB: headspace
       POSTGRES_USER: headspace_user
       POSTGRES_PASSWORD: headspace_password
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql

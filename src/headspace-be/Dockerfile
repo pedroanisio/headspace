@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements files
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml ./
 
 # Install UV for faster dependency management
 RUN pip install uv
