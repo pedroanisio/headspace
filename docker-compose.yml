@@ -1,5 +1,3 @@
-x-image-base: &img "registry.digitalocean.com/arc4d3io-artifacts-registry"
-
 services:
   postgres:
     image: postgres:16
@@ -21,7 +19,7 @@ services:
       - headspace_network
 
   backend:
-    image: *img/headspace-backend:${TAG}
+    image: "${REGISTRY}/headspace-be:${TAG}"
     build:
       context: ./src/headspace-be
       dockerfile: Dockerfile
@@ -41,7 +39,7 @@ services:
       - headspace_network
 
   frontend:
-     image: *img/headspace-frontend:${TAG}
+     image: "${REGISTRY}/headspace-fe:${TAG}"
      build:
       context: ./src/headspace-fe
       dockerfile: Dockerfile
