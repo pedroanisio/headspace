@@ -39,10 +39,7 @@ services:
       - headspace_network
 
   frontend:
-     image: "${REGISTRY}/headspace-fe:${TAG}"
-     build:
-      context: ./src/headspace-fe
-      dockerfile: Dockerfile
+    image: "${REGISTRY}/headspace-fe:${TAG}"
     build:
       context: ./src/headspace-fe
       dockerfile: Dockerfile
